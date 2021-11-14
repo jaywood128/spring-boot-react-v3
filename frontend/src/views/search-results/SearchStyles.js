@@ -12,13 +12,13 @@ const SearchStyles = styled.div`
 
 const SearchInput = styled.input`
   width: 600px;
-  height: 40px;
+  height: 50px;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: groove;
-  border-top-right-radius: 7px;
-  border-bottom-right-radius: 7px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
   border: none;
   background-color: white;
   :focus {
@@ -34,17 +34,16 @@ const SearchInputContainer = styled.div`
   padding: 15px 8px;
   height: 40px;
   background-color: #484848;
-  border-radius: 10px;
 `;
 const SearchIconContainer = styled.div`
   display: flex;
   background-color: white;
   align-items: center;
   justify-content: center;
-  height: 40px;
+  height: 50px;
   width: 50px;
-  border-top-left-radius: 7px;
-  border-bottom-left-radius: 7px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 `;
 
 export { SearchStyles, SearchInput, SearchInputContainer, SearchIconContainer };
