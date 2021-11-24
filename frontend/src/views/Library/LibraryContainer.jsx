@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PodcastContainer from "../../components/podcast/Podcast";
+import styled from "styled-components";
+import Podcast from "../../components/podcast/Podcast";
 import ViewContainerStylings from "../application/ApplicationContainerStyling";
 import LibraryContainerStylings from "./LibraryContainerStylings";
+
+const PodcastLibraryContainer = styled.div`
+  display: flex;
+  width: 250px;
+  height: 340px;
+`;
 
 const LibraryContainer = () => {
   const [podcasts, setPodcasts] = useState([]);
@@ -31,7 +38,10 @@ const LibraryContainer = () => {
         <LibraryContainerStylings>
           {podcasts.map((podcast) => (
             // <div key={podcast.id}>
-            <PodcastContainer podcast={podcast} key={podcast.id} />
+            <PodcastLibraryContainer key={podcast.id}>
+              <Podcast podcast={podcast} />
+            </PodcastLibraryContainer>
+
             // </div>
           ))}
         </LibraryContainerStylings>

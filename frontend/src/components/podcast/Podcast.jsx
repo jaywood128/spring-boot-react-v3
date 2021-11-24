@@ -1,7 +1,8 @@
 import React from "react";
 
 import {
-  PodcastStylesContainer,
+  PodcastStylesLinkContainer,
+  PodcastContainer,
   TitleContainer,
   ImageContainer,
   StyledImage,
@@ -9,24 +10,33 @@ import {
   StyledTitle,
 } from "./PodcastStyles";
 
-const PodcastContainer = ({ podcast }) => {
+const Podcast = ({ podcast }) => {
   const encodedPodcastTitle = encodeURIComponent(podcast.title);
 
+  const renderTitle = (podcastTitleCheck) => {
+    if (podcastTitleCheck.title) {
+      return podcast.title.replace(/<[^>]*>?/gm, "");
+    }
+    return podcastTitleCheck.title_highlighted.replace(/<[^>]*>?/gm, "");
+  };
+
   return (
-    <PodcastStylesContainer
-      key={podcast.id}
-      to={`/episodes/${encodedPodcastTitle}/${podcast.id}`}
-    >
-      <CardTop>
-        <ImageContainer>
-          <StyledImage src={podcast.image} />
-        </ImageContainer>
-      </CardTop>
-      <TitleContainer>
-        <StyledTitle>{podcast.title}</StyledTitle>
-      </TitleContainer>
-    </PodcastStylesContainer>
+    <PodcastContainer>
+      <PodcastStylesLinkContainer
+        key={podcast.id}
+        to={`/episodes/${encodedPodcastTitle}/${podcast.id}`}
+      >
+        <CardTop>
+          <ImageContainer>
+            <StyledImage src={podcast.image} />
+          </ImageContainer>
+        </CardTop>
+        <TitleContainer>
+          <StyledTitle>{renderTitle(podcast)}</StyledTitle>
+        </TitleContainer>
+      </PodcastStylesLinkContainer>
+    </PodcastContainer>
   );
 };
 
-export default PodcastContainer;
+export default Podcast;

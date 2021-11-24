@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SearchResultsContainerStyles = styled.div`
+const EpisodesSearchResultsContainerStyles = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #484848;
@@ -18,4 +18,4 @@ const EpisodeSearchResultsContainer = styled.div`
   font-family: "Gothic A1, sans-serif";
 `;
 
-export { SearchResultsContainerStyles, EpisodeSearchResultsContainer };
+export { EpisodesSearchResultsContainerStyles, EpisodeSearchResultsContainer };

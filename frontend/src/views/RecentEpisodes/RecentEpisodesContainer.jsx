@@ -22,11 +22,13 @@ import {
   EpisodeAudioLinkContainer,
   EpisodeDescriptionContainer,
   EpisodeImage,
+  EpisodeImageContainer,
   EpisodeTitle,
   EpisodeStyledPlayLink,
   EpisodeTitleContainer,
 } from "../../components/episode/EpisodeStylings";
 import { StyledImage } from "../../components/podcast/PodcastStyles";
+import { HorizontalLine } from "../../components/search/type-ahead/TypeAheadContainerStyles";
 
 const RecentEpisodesContainer = () => {
   const { id } = useParams();
@@ -162,7 +164,9 @@ const RecentEpisodesContainer = () => {
         </HeaderImageContainer>
 
         <EpisodesHeaderStylings>
-          {podcastTitle}
+          {podcastTitle.length > 20
+            ? `${podcastTitle.substring(0, 35).replace(/<[^>]*>?/gm, "")}...`
+            : podcastTitle}
 
           {isFollowingPodcast ? (
             <FollowingContainer>
@@ -199,11 +203,14 @@ const RecentEpisodesContainer = () => {
                 {index === 0 ? (
                   <div style={{ padding: "0px" }}>
                     <EpisodeContainer key={episode.id}>
+                      <HorizontalLine />
                       <EpisodeRowContainer>
-                        <EpisodeImage
-                          alt="Not Availiable"
-                          src={episode.image}
-                        />
+                        <EpisodeImageContainer style={{ marginLeft: "25px" }}>
+                          <EpisodeImage
+                            alt="Not Availiable"
+                            src={episode.image}
+                          />
+                        </EpisodeImageContainer>
 
                         <EpisodeTitleContainer>
                           <EpisodeTitle>{episode.title} </EpisodeTitle>
@@ -212,11 +219,12 @@ const RecentEpisodesContainer = () => {
                               style={{
                                 lineHeight: "30px",
                                 font: "#404040",
+                                width: "100%",
                               }}
                             >
-                              {episode.description.length > 100
+                              {episode.description.length > 255
                                 ? `${episode.description
-                                    .substring(0, 100)
+                                    .substring(0, 255)
                                     .replace(/<[^>]*>?/gm, "")}...`
                                 : episode.description}
                             </p>
@@ -231,16 +239,20 @@ const RecentEpisodesContainer = () => {
                           </EpisodeDescriptionContainer>
                         </EpisodeTitleContainer>
                       </EpisodeRowContainer>
+                      <HorizontalLine />
                     </EpisodeContainer>
                   </div>
                 ) : (
                   <div style={{ padding: "0px" }}>
                     <EpisodeContainer key={episode.id}>
                       <EpisodeRowContainer>
-                        <EpisodeImage
-                          alt="Not Availiable"
-                          src={episode.image}
-                        />
+                        <EpisodeImageContainer>
+                          <EpisodeImage
+                            alt="Not Availiable"
+                            src={episode.image}
+                          />
+                        </EpisodeImageContainer>
+
                         <EpisodeTitleContainer>
                           <EpisodeTitle>{episode.title} </EpisodeTitle>
                           <EpisodeDescriptionContainer>
@@ -248,11 +260,12 @@ const RecentEpisodesContainer = () => {
                               style={{
                                 lineHeight: "30px",
                                 font: "#404040",
+                                width: "100%",
                               }}
                             >
-                              {episode.description.length > 100
+                              {episode.description.length > 255
                                 ? `${episode.description
-                                    .substring(0, 100)
+                                    .substring(0, 255)
                                     .replace(/<[^>]*>?/gm, "")}...`
                                 : episode.description}
                             </p>
@@ -267,6 +280,7 @@ const RecentEpisodesContainer = () => {
                           </EpisodeDescriptionContainer>
                         </EpisodeTitleContainer>
                       </EpisodeRowContainer>
+                      <HorizontalLine />
                     </EpisodeContainer>
                   </div>
                 )}

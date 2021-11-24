@@ -4,8 +4,9 @@ const TypeAheadContainerStyles = styled.div`
   display: flex;
   flex-direction: column;
   font-family: "Roboto Mono";
-  float: left;
+  /* float: left; */
   position: relative;
+  z-index: 200;
   border-radius: 5px;
   height: fit-content;
   width: 630px;
@@ -16,11 +17,12 @@ const TypeAheadContainerStyles = styled.div`
 
 const HorizontalLine = styled.div`
   display: block;
-  height: 1px;
+  height: 5px;
   border: 0;
-  border-top: 1px solid #ccc;
-  margin: 0.5em 0;
+  border-top: 1px solid grey;
+  margin: 0.1em 0;
   padding: 0;
+  width: 100%;
 `;
 
 export { TypeAheadContainerStyles, HorizontalLine };

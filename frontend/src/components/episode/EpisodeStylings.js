@@ -4,9 +4,8 @@ const EpisodeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   height: 200px;
-  width: 700px;
   flex: 1;
-  font-family: "Gothic A1, sans-serif";
+  font-family: "Roboto Mono";
 `;
 
 const EpisodeTitle = styled.h1`
@@ -14,18 +13,23 @@ const EpisodeTitle = styled.h1`
   height: 5px;
   text-align: start;
   font-size: 16px;
-  font-family: "Gothic A1", sans-serif;
   background-color: #404040;
 `;
 const EpisodeTitleContainer = styled.div`
-  margin-left: 10px;
   color: white;
+  margin-left: 15px;
+`;
+
+const EpisodeImageContainer = styled.div`
+  margin-top: 25px;
+  margin-left: 20px;
+  width: 150px;
+  height: 150px;
 `;
 
 const EpisodeImage = styled.img`
-  max-width: 100%;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 20px;
   box-shadow: 2px 5px 10px black;
 `;
@@ -40,6 +44,7 @@ const EpisodeAudioLinkContainer = styled.div`
 const EpisodeDescriptionContainer = styled.div`
   display: flex;
   height: 125px;
+  margin-left: 15px;
   background-color: #404040;
   font-size: 16px;
   flex-wrap: wrap;
@@ -64,6 +69,7 @@ export {
   EpisodeTitle,
   EpisodeTitleContainer,
   EpisodeImage,
+  EpisodeImageContainer,
   EpisodeAudioLinkContainer,
   EpisodeDescriptionContainer,
   EpisodeStyledPlayLink,

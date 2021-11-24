@@ -39,7 +39,9 @@ const Home = () => {
             </CategoryTitleStylingsContainer>
             <CuratedPodcastRowStylingsContainer>
               {category.podcasts.map((podcast) => (
-                <PodcastContainer podcast={podcast} key={podcast.id} />
+                <div style={{ width: "100%" }} key={podcast.id}>
+                  <PodcastContainer podcast={podcast} />
+                </div>
               ))}
             </CuratedPodcastRowStylingsContainer>
           </div>

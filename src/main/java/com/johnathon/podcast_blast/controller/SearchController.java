@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class SearchController {
     // prod --> https://listen-api.listennotes.com/api/v2
     // test -> https://listen-api-test.listennotes.com/api/v2
-    private static final String baseURL = "https://listen-api.listennotes.com/api/v2";
+    private static final String baseURL = "https://listen-api-test.listennotes.com/api/v2";
     @Autowired
     private WebClient.Builder webClientBuilder;
     @Autowired

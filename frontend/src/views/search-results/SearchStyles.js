@@ -5,9 +5,8 @@ const SearchStyles = styled.div`
   background-color: #484848;
   width: 100%;
   justify-content: flex-start;
-  /* width: auto; */
-  /* height: 100%; */
   margin-left: 75px;
+  margin-bottom: 75px;
 `;
 
 const SearchInput = styled.input`

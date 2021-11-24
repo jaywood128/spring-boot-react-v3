@@ -17,7 +17,6 @@ import java.util.*;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000/")
 @RequestMapping("/api")
@@ -32,9 +31,9 @@ public class PodcastController {
     @Autowired
     private RestTemplate restTemplate;
     private Collection<Podcast> emptyPodcastCollection = new ArrayList<>();
-    //prod --> https://listen-api.listennotes.com/api/v2
+    // prod --> https://listen-api.listennotes.com/api/v2
     // test -> https://listen-api-test.listennotes.com/api/v2
-    private static final String baseURL = "https://listen-api.listennotes.com/api/v2";
+    private static final String baseURL = "https://listen-api-test.listennotes.com/api/v2";
 
     @Autowired
     private WebClient.Builder webClientBuilder;
@@ -68,46 +67,46 @@ public class PodcastController {
 
                     JSONObject jsonObjects = webClientBuilder
                             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                            .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey())
-                            .build()
-                            .get()
-                            .uri(baseURL + "/podcasts/" + aid + "?sort=recent_first")
-                            .retrieve()
-                            .bodyToMono(JSONObject.class)
-                            .block();
+                            .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey()).build().get()
+                            .uri(baseURL + "/podcasts/" + aid + "?sort=recent_first").retrieve()
+                            .bodyToMono(JSONObject.class).block();
                     returnedPodcasts.add(jsonObjects);
-                        assert jsonObjects != null;
-                        Iterator<Map.Entry<String, Object>> it = jsonObjects.entrySet().iterator();
-                        while(it.hasNext()) {
-                            Map.Entry<String, Object> current = it.next();
-                            System.out.println("KEY: " + current.getKey() + "VALUE:  " + current.getValue());
-                            if (current.getKey().equalsIgnoreCase("episodes")) {
-                                it.remove();
-                            }
+                    assert jsonObjects != null;
+                    Iterator<Map.Entry<String, Object>> it = jsonObjects.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry<String, Object> current = it.next();
+                        System.out.println("KEY: " + current.getKey() + "VALUE:  " + current.getValue());
+                        if (current.getKey().equalsIgnoreCase("episodes")) {
+                            it.remove();
                         }
+                    }
                 }
             }
         }
         return new ResponseEntity<>(returnedPodcasts, HttpStatus.OK);
     }
-    //Check if a user is following a certain podcast
-    //params: user id, podcast api id
+
+    // Check if a user is following a certain podcast
+    // params: user id, podcast api id
     // return : boolean
     @GetMapping(value = "/{id}/podcasts/{podcastApiId}/isFollowing", produces = "application/json")
     boolean isUserFollowingPodcast(@PathVariable String id, @PathVariable("podcastApiId") String podcastApiId) {
         Optional<User> userCheck = userRepository.findById(Long.valueOf(id));
         Optional<Podcast> podcastCheck = podcastRepository.findByApiId(podcastApiId);
-        if(userCheck.isEmpty() || podcastCheck.isEmpty()) return false;
-        if(!userCheck.get().getPodcasts().contains(podcastCheck.get())){
+        if (userCheck.isEmpty() || podcastCheck.isEmpty())
+            return false;
+        if (!userCheck.get().getPodcasts().contains(podcastCheck.get())) {
             return false;
         }
         return true;
     }
 
     // Read a podcast's episodes
-//    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or hasRole('ROLE_ADMIN')")
+    // @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MODERATOR') or
+    // hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/{id}/podcasts/{podcastApiId}", produces = "application/json")
-    ResponseEntity<List<JSONObject>> getPodcastsEpisodes(@PathVariable String id, @PathVariable("podcastApiId") String podcastApiId) {
+    ResponseEntity<List<JSONObject>> getPodcastsEpisodes(@PathVariable String id,
+            @PathVariable("podcastApiId") String podcastApiId) {
         Optional<User> userCheck = userRepository.findById(Long.valueOf(id));
         Optional<Podcast> podcastCheck = podcastRepository.findByApiId(podcastApiId);
         List<JSONObject> returnedPodcastEpisodes = new ArrayList<>();
@@ -122,16 +121,12 @@ public class PodcastController {
 
                 JSONObject jsonObjects = webClientBuilder
                         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey())
-                        .build()
-                        .get()
-                        .uri(baseURL + "/podcasts/" + podcastApiId + "?sort=recent_first")
-                        .retrieve()
-                        .bodyToMono(JSONObject.class)
-                        .block();
+                        .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey()).build().get()
+                        .uri(baseURL + "/podcasts/" + podcastApiId + "?sort=recent_first").retrieve()
+                        .bodyToMono(JSONObject.class).block();
                 assert jsonObjects != null;
                 Iterator<Map.Entry<String, Object>> it = jsonObjects.entrySet().iterator();
-                while(it.hasNext()) {
+                while (it.hasNext()) {
                     Map.Entry<String, Object> current = it.next();
                     System.out.println("EPISODE KEY: " + current.getKey() + "EPISODE VALUE:  " + current.getValue());
                     if (!current.getKey().equalsIgnoreCase("episodes")) {
@@ -167,7 +162,8 @@ public class PodcastController {
         if (currentUser.isEmpty() || podcastToDelete.isEmpty()) {
             return HttpStatus.NOT_FOUND;
         }
-        if (currentUser.get().removePodcast(podcastToDelete.get()) && podcastToDelete.get().removeUser(currentUser.get())) {
+        if (currentUser.get().removePodcast(podcastToDelete.get())
+                && podcastToDelete.get().removeUser(currentUser.get())) {
             currentUser.get().removePodcast(podcastToDelete.get());
             podcastToDelete.get().removeUser(currentUser.get());
             podcastRepository.delete(podcastToDelete.get());
@@ -177,18 +173,13 @@ public class PodcastController {
     }
 
     @GetMapping("/curated_podcasts")
-    public ResponseEntity<List<JSONObject>> curratedPodcasts(){
+    public ResponseEntity<List<JSONObject>> curratedPodcasts() {
         List<JSONObject> curratedPodcasts = new ArrayList<>();
 
         JSONObject jsonObjects = webClientBuilder
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey())
-                .build()
-                .get()
-                .uri(baseURL + "/curated_podcasts?page=1")
-                .retrieve()
-                .bodyToMono(JSONObject.class)
-                .block();
+                .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey()).build().get()
+                .uri(baseURL + "/curated_podcasts?page=1").retrieve().bodyToMono(JSONObject.class).block();
         assert jsonObjects != null;
         curratedPodcasts.add(jsonObjects);
 
@@ -196,32 +187,28 @@ public class PodcastController {
     }
 
     @GetMapping(value = "/podcasts/{podcastApiId}", produces = "application/json")
-    ResponseEntity<List<JSONObject>> getPodcastsEpisodesWithoutUserId(@PathVariable("podcastApiId") String podcastApiId) {
+    ResponseEntity<List<JSONObject>> getPodcastsEpisodesWithoutUserId(
+            @PathVariable("podcastApiId") String podcastApiId) {
 
         List<JSONObject> returnedPodcastEpisodes = new ArrayList<>();
         List<JSONObject> podcastsEpisodes = new ArrayList<>();
 
-                JSONObject jsonObjects = webClientBuilder
-                        .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey())
-                        .build()
-                        .get()
-                        .uri(baseURL + "/podcasts/" + podcastApiId + "?sort=recent_first")
-                        .retrieve()
-                        .bodyToMono(JSONObject.class)
-                        .block();
-                assert jsonObjects != null;
-                Iterator<Map.Entry<String, Object>> it = jsonObjects.entrySet().iterator();
-                while(it.hasNext()) {
-                    Map.Entry<String, Object> current = it.next();
-                    System.out.println("EPISODE KEY: " + current.getKey() + "EPISODE VALUE:  " + current.getValue());
-                    if (!current.getKey().equalsIgnoreCase("episodes")) {
-                        it.remove();
-                    }
-                }
-                returnedPodcastEpisodes.add(jsonObjects);
+        JSONObject jsonObjects = webClientBuilder
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .defaultHeader("X-ListenAPI-Key", webSecurityConfig.getApiKey()).build().get()
+                .uri(baseURL + "/podcasts/" + podcastApiId + "?sort=recent_first").retrieve()
+                .bodyToMono(JSONObject.class).block();
+        assert jsonObjects != null;
+        Iterator<Map.Entry<String, Object>> it = jsonObjects.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> current = it.next();
+            System.out.println("EPISODE KEY: " + current.getKey() + "EPISODE VALUE:  " + current.getValue());
+            if (!current.getKey().equalsIgnoreCase("episodes")) {
+                it.remove();
+            }
+        }
+        returnedPodcastEpisodes.add(jsonObjects);
         return new ResponseEntity<>(returnedPodcastEpisodes, HttpStatus.OK);
     }
-
 
 }

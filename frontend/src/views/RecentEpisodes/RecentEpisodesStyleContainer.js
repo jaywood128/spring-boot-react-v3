@@ -3,10 +3,10 @@ import styled from "styled-components";
 const RecentEpisodesStyleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  height: 1000px;
+  /* flex-wrap: wrap; */
+  /* height: 1000px; */
   background-color: #484848;
-  font-family: "Gothic A1", sans-serif;
+  font-family: "Roboto Mono";
   color: #ffffff;
 `;
 
@@ -14,9 +14,9 @@ const EpisodeRowContainer = styled.div`
   display: flex;
   flex: 20%;
   align-items: center;
-  font-family: "Raleway";
-  padding: 20px;
-  margin: 20px;
+  font-family: "Roboto Mono";
+  /* padding: 20px; */
+  margin: 0px;
   font-size: 1rem;
   border-radius: 20px;
   white-space: normal;

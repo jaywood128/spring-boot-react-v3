@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 const CuratedPodcastRowStylingsContainer = styled.div`
   display: flex;
-  overflow: scroll;
+  /* overflow: scroll; */
+  height: 280px;
+  background-color: orange;
   margin-left: 20px;
   ::-webkit-scrollbar {
     display: none;

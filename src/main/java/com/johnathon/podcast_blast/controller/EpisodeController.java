@@ -25,7 +25,7 @@ public class EpisodeController {
     private WebSecurityConfig webSecurityConfig;
     @Autowired
     private WebClient.Builder webClientBuilder;
-    private static final String baseURL = "https://listen-api.listennotes.com/api/v2";
+    private static final String baseURL = "https://listen-api-test.listennotes.com/api/v2";
 
     public EpisodeController(EpisodeRepository episodeRepository, UserRepository userRepository,
             PodcastRepository podcastRepository) {

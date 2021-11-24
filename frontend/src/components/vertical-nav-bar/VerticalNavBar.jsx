@@ -40,7 +40,7 @@ const VerticalNavBar = () => (
         </LinkItem>
 
         <LinkItem>
-          <StyledLink to="/">
+          <StyledLink to="/all-genres">
             <LinkIcon className="fas fa-star" />
             <span>Explore</span>
           </StyledLink>

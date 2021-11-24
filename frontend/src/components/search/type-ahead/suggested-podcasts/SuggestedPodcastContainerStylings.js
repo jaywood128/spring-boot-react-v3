@@ -18,10 +18,9 @@ const SuggestedPodcastContainer = styled.div`
 `;
 const SuggestPocastImageContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: white;
   height: auto;
+  /* width: fit-content; */
   width: max-content;
   img {
     border-radius: 7px;
@@ -38,18 +37,24 @@ const SuggestedPodcastStyles = styled.div`
 `;
 const SuggestedPodcastLink = styled(Link)`
   background-color: white;
+  color: inherit;
+  text-decoration: none;
 `;
 const SuggestedPodcastTitleContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   /* background-color: red; */
   background-color: white;
-  /* margin-left: 15px; */
+  margin-left: 15px;
 `;
 const SuggestedPodcastTitle = styled.div`
-  font-size: 0.5rem;
+  font-size: 0.7rem;
+  text-decoration: none;
   background-color: white;
-  /* width: 100%; */
+  width: 100%;
+  h1 {
+    text-decoration: none;
+  }
 `;
 
 const SuggestedPodcastPublisher = styled.div`

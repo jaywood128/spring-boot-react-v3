@@ -8,7 +8,7 @@ import {
   SuggestedPodcastImageStyles,
   SuggestedPodcastPublisher,
   SuggestedPodcastTitle,
-  // SuggestedPodcastTitleContainer,
+  SuggestedPodcastTitleContainer,
   SuggestedPodcastContainer,
   SuggestedPodcastLink,
 } from "./SuggestedPodcastContainerStylings";
@@ -25,14 +25,16 @@ const SuggestedPodcastsContainer = (props) => (
           >
             <SuggestPocastImageContainer>
               <SuggestedPodcastImageStyles src={podcast.image} />
-              <SuggestedPodcastTitle>
-                <h2>{podcast.title_original}</h2>
+              <SuggestedPodcastTitleContainer>
+                <SuggestedPodcastTitle>
+                  {" "}
+                  <h3>{podcast.publisher_original} </h3>{" "}
+                </SuggestedPodcastTitle>
                 <SuggestedPodcastPublisher>
-                  <h3>{podcast.publisher_original} </h3>
+                  <div>{podcast.title_original}</div>
                 </SuggestedPodcastPublisher>
-              </SuggestedPodcastTitle>
+              </SuggestedPodcastTitleContainer>
             </SuggestPocastImageContainer>
-            {/* <SuggestedPodcastTitleContainer></SuggestedPodcastTitleContainer> */}
           </SuggestedPodcastLink>
           {/* </SuggestedPodcastStyles> */}
         </SuggestedPodcastContainer>

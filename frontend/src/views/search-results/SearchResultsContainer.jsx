@@ -1,12 +1,14 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import { FaPlayCircle } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
-import { FcSearch } from "react-icons/fc";
+import { BiSearchAlt } from "react-icons/bi";
 import ApplicationContainerStylings from "../application/ApplicationContainerStyling";
 import {
-  SearchResultsContainerStyles,
+  EpisodesSearchResultsContainerStyles,
   EpisodeSearchResultsContainer,
 } from "./SearchResultsContainerStyles";
 
@@ -40,12 +42,29 @@ import {
 import {
   BrowseByGenre,
   SuggestedPodcastsTitle,
-  // SuggestedGenreStylings,
-  // SuggestedGenreLink,
+  SuggestedGenresButton,
+  SuggestedGenresContainerStyles,
 } from "../../components/search/type-ahead/suggested-genres/SuggestedGenresContainerStyles";
-import SuggestedGenres from "../../components/search/type-ahead/suggested-genres/SuggestedGenresContainer";
 import SuggestedPodcastsContainer from "../../components/search/type-ahead/suggested-podcasts/SuggestedPostcastsContainer";
 import TopBarContainer from "../../components/top-bar/TopBarContainer";
+import PodcastContainer from "../../components/podcast/Podcast";
+import PodcastGridStylingsContainer from "../Library/LibraryContainerStylings";
+
+const TopPodcastsByGenreResultsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  margin-left: 25px;
+  /* width: 300px;
+  height: 300px; */
+`;
+
+const TopPodcastByGenreResultsTitle = styled.h1`
+  font-weight: 700;
+`;
+const TopPodcastByGenreResultsTitleContainer = styled.div`
+  width: 100%;
+`;
 // eslint-disable-next-line arrow-body-style
 const SearchResultsContainer = () => {
   // const { data } = TypeAheadData;
@@ -63,6 +82,10 @@ const SearchResultsContainer = () => {
   const [searchResults, setSearchResults] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [typeAheadResults, setTypeAheadResults] = useState([]);
+  const [suggestedGenreId, setSuggestedGenreId] = useState([]);
+  const [topPodcastsByGenreResults, setTopPodcastsByGenreResults] = useState(
+    []
+  );
   const BACKEND_PODCASTS = "http://127.0.0.1:8080/api";
   const isEmpty = (obj) => {
     // eslint-disable-next-line no-restricted-syntax
@@ -173,6 +196,34 @@ const SearchResultsContainer = () => {
       });
   }
 
+  async function fetchTopPodcastsBasedOnGenreId() {
+    // eslint-disable-next-line no-console
+    console.log(
+      `Text input from typeahead search field submitted to back end ${JSON.stringify(
+        typeAheadSearchField.textInput
+      )}`
+    );
+    axios
+      .post(`${BACKEND_PODCASTS}/type-ahead-search`, {
+        textInput: window.localStorage.getItem("typeAheadSearchField"),
+      })
+      // eslint-disable-next-line no-console
+      .then((response) => {
+        setTopPodcastsByGenreResults(response.data.podcasts);
+
+        // eslint-disable-next-line no-console
+        console.log(
+          `Top podcast's based on genre-id ${
+            response.data.count
+          }  RESP ${JSON.stringify(response)}`
+        );
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      });
+  }
+
   const handleSearchInputChange = (e) => {
     e.preventDefault();
     setTypeAheadSearchField((userInput) => ({
@@ -208,6 +259,24 @@ const SearchResultsContainer = () => {
     }));
     setInitalTypeAheadResultsState();
   };
+  const handleSuggestedGenreIdClick = (e) => {
+    // eslint-disable-next-line no-alert
+    alert(`Suggested term clicked!${e.target.value}`);
+    // eslint-disable-next-line no-console
+    console.log(
+      `Suggested term clicked name!${JSON.stringify(e.target.value)}`
+    );
+    const { value, name } = e.target;
+    setSuggestedGenreId((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    setInitalTypeAheadResultsState();
+
+    if (!isEmpty(searchResults)) {
+      setInitalResultsState();
+    }
+  };
 
   const renderTypeAheadComponent = () => {
     if (!isEmpty(typeAheadResults)) {
@@ -238,7 +307,22 @@ const SearchResultsContainer = () => {
             <div>
               <HorizontalLine />
               <BrowseByGenre>BROWSE BY CATEGORY</BrowseByGenre>
-              <SuggestedGenres genres={typeAheadResults.genres} />
+
+              {typeAheadResults.genres.map((genre) => {
+                const { id, name, parent_id } = genre;
+                return (
+                  <SuggestedGenresContainerStyles key={id}>
+                    <SuggestedGenresButton
+                      type="button"
+                      value={id}
+                      name="genreId"
+                      onClick={handleSuggestedGenreIdClick}
+                    >
+                      {name}
+                    </SuggestedGenresButton>
+                  </SuggestedGenresContainerStyles>
+                );
+              })}
               <HorizontalLine />
             </div>
           ) : (
@@ -296,6 +380,14 @@ const SearchResultsContainer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestedSearchTermField]);
 
+  useEffect(() => {
+    if (suggestedGenreId.genreId !== "") {
+      fetchTopPodcastsBasedOnGenreId();
+    }
+  }, [suggestedGenreId]);
+
+  // useEffect(() => {}, [typeAheadResults]);
+
   return (
     <ApplicationContainerStylings onClick={setInitalTypeAheadResultsState}>
       <TopBarContainer />
@@ -318,41 +410,34 @@ const SearchResultsContainer = () => {
         </SearchInputContainer>
       </SearchStyles>
 
-      <SearchResultsContainerStyles>
+      <EpisodesSearchResultsContainerStyles>
         {isEmpty(searchResults) ? (
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
               alignItems: "center",
+              marginLeft: "40px",
             }}
           >
             <h1>
-              <FcSearch /> Get searching! <FcSearch />
+              <BiSearchAlt /> Get searching!
             </h1>
           </div>
         ) : (
           searchResults.map((episode) => (
-            // <EpisodeSearchResultsContainer key={episode.id}>
             <EpisodeContainer key={episode.id}>
               <EpisodeRowContainer>
                 <EpisodeImage alt="not availible" src={episode.image} />
                 <EpisodeTitleContainer>
-                  <EpisodeTitle> Episode Title</EpisodeTitle>
+                  <EpisodeTitle> {episode.title_original}</EpisodeTitle>
                   <EpisodeDescriptionContainer>
-                    <p
-                      style={{
-                        lineHeight: "30px",
-                        font: "#404040",
-                      }}
-                    >
+                    <p>
                       {episode.description_highlighted.length > 100
                         ? `${episode.description_original
                             .substring(0, 100)
                             .replace(/<[^>]*>?/gm, "")}...`
                         : episode.description_highlighted}
                     </p>
-                    <p>Description</p>
                     <EpisodeAudioLinkContainer>
                       <EpisodeStyledPlayLink
                         href={episode.audio}
@@ -364,12 +449,26 @@ const SearchResultsContainer = () => {
                   </EpisodeDescriptionContainer>
                 </EpisodeTitleContainer>
               </EpisodeRowContainer>
+              <HorizontalLine />
             </EpisodeContainer>
-
-            // </EpisodeSearchResultsContainer>
           ))
         )}
-      </SearchResultsContainerStyles>
+      </EpisodesSearchResultsContainerStyles>
+
+      {!isEmpty(topPodcastsByGenreResults) ? (
+        <TopPodcastsByGenreResultsContainer>
+          <TopPodcastByGenreResultsTitleContainer>
+            <TopPodcastByGenreResultsTitle>
+              Podcasts{" "}
+            </TopPodcastByGenreResultsTitle>
+          </TopPodcastByGenreResultsTitleContainer>
+          {topPodcastsByGenreResults.map((podcast) => (
+            <PodcastContainer podcast={podcast} key={podcast.id} />
+          ))}
+        </TopPodcastsByGenreResultsContainer>
+      ) : (
+        <div />
+      )}
     </ApplicationContainerStylings>
   );
 };

@@ -2,27 +2,33 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import NoImageAvailible from "./icons8-image-not-available-96 copy.png";
 
-const PodcastStylesContainer = styled(Link)`
-  color: white;
-  text-decoration: none;
-  background-color: #404040;
-  border-radius: 6px;
-  margin: 10px 30px;
-  width: 300px;
-  height: 300px;
+const PodcastContainer = styled.div`
+  display: flex;
 
-  :hover {
+  height: auto;
+  justify-content: center;
+  a:hover {
     background-color: rgba(64, 64, 64, 0.45);
     -webkit-box-shadow: 3px 5px 24px grey; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow: 3px 5px 24px grey; /* Firefox 3.5 - 3.6 */
     box-shadow: 3px 5px 24px grey;
   }
 `;
+
+const PodcastStylesLinkContainer = styled(Link)`
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  /* margin: 10px 30px 10px 20px; */
+`;
 const TitleContainer = styled.div`
-  padding: 0.5rem;
-  height: 25px;
-  width: 300px;
+  margin-bottom: 30px;
+  font: white;
+  font-weight: 600;
   text-align: center;
+  padding: 0.5rem;
+  height: 40px;
+  margin-left: 10px;
 `;
 const StyledTitle = styled.span`
   font-size: 1.2rem;
@@ -54,7 +60,8 @@ const CardTop = styled.div`
 `;
 
 export {
-  PodcastStylesContainer,
+  PodcastContainer,
+  PodcastStylesLinkContainer,
   TitleContainer,
   ImageContainer,
   StyledImage,

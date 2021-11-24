@@ -8,6 +8,7 @@ import RecentEpisodesContainer from "./views/RecentEpisodes/RecentEpisodesContai
 import LibraryContainer from "./views/Library/LibraryContainer";
 import Signup from "./views/user-actions/sign-up/Signup";
 import SearchResultsContainer from "./views/search-results/SearchResultsContainer";
+import GenresContainer from "./views/genres/GenresContainer";
 // import SignIn from "./views/user-actions/SignIn";
 // import Signup from "./views/user-actions/Signup";
 
@@ -48,6 +49,12 @@ function App() {
             </Route>
             <Route exact path="/search-results-container">
               <SearchResultsContainer />
+            </Route>
+            <Route exact path="/all-genres">
+              <GenresContainer />
+            </Route>
+            <Route exact path="/top-podcasts-by-genre/:genre-id">
+              <GenresContainer />
             </Route>
           </Switch>
         </BodyContainer>
