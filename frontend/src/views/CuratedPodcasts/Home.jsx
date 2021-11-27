@@ -33,13 +33,13 @@ const Home = () => {
     <ViewContainerStylings>
       <div>
         {featured.map((category) => (
-          <div key={category.id} style={{ marginTop: "20px" }}>
+          <div key={category.id} style={{ margin: "50px" }}>
             <CategoryTitleStylingsContainer>
               {category.title}
             </CategoryTitleStylingsContainer>
             <CuratedPodcastRowStylingsContainer>
               {category.podcasts.map((podcast) => (
-                <div style={{ width: "100%" }} key={podcast.id}>
+                <div key={podcast.id}>
                   <PodcastContainer podcast={podcast} />
                 </div>
               ))}

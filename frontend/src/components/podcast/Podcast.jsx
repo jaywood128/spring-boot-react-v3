@@ -15,7 +15,23 @@ const Podcast = ({ podcast }) => {
 
   const renderTitle = (podcastTitleCheck) => {
     if (podcastTitleCheck.title) {
-      return podcast.title.replace(/<[^>]*>?/gm, "");
+      if (podcastTitleCheck.title.length > 21) {
+        return podcastTitleCheck.title
+          .substring(0, 20)
+          .replace(/<[^>]*>?/gm, "")
+          .concat("...");
+      }
+      return podcastTitleCheck.title.replace(/<[^>]*>?/gm, "");
+    }
+
+    if (
+      podcastTitleCheck.title_highlighted &&
+      podcastTitleCheck.title_highlighted.length > 21
+    ) {
+      return podcastTitleCheck.title_highlighted
+        .substring(0, 20)
+        .replace(/<[^>]*>?/gm, "")
+        .concat("...");
     }
     return podcastTitleCheck.title_highlighted.replace(/<[^>]*>?/gm, "");
   };

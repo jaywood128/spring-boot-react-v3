@@ -3,6 +3,7 @@ import styled from "styled-components";
 const EpisodeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  background-color: #383838;
   height: 200px;
   flex: 1;
   font-family: "Roboto Mono";

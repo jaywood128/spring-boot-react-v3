@@ -30,7 +30,6 @@ const SuggestedPodcastStyles = styled.div`
   display: flex;
   flex-wrap: wrap;
   height: 20px;
-  background-color: pink;
   /* a:hover {
     color: grey;
   } */

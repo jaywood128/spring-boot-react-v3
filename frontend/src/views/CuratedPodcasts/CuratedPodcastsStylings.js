@@ -2,17 +2,19 @@ import styled from "styled-components";
 
 const CuratedPodcastRowStylingsContainer = styled.div`
   display: flex;
-  /* overflow: scroll; */
-  height: 280px;
-  background-color: orange;
-  margin-left: 20px;
+  overflow: scroll;
+  height: auto;
+  width: 100%;
+  margin-left: 10px;
+  margin-top: 20px;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 const CategoryTitleStylingsContainer = styled.div`
-  color: white !important;
-  font-family: "Gothic A1", sans-serif;
+  color: white;
+  font-family: "Roboto Mono" monospace;
+  font-weight: 800;
   text-transform: uppercase;
   font-size: 2rem;
   text-align: center;

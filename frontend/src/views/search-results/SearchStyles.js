@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const SearchStyles = styled.div`
   display: flex;
-  background-color: #484848;
+  background-color: #282828;
   width: 100%;
   justify-content: flex-start;
   margin-left: 75px;
@@ -32,7 +32,7 @@ const SearchInputContainer = styled.div`
   width: 100%;
   padding: 15px 8px;
   height: 40px;
-  background-color: #484848;
+  background-color: #282828;
 `;
 const SearchIconContainer = styled.div`
   display: flex;

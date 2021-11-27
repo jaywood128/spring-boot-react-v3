@@ -4,11 +4,14 @@ import NoImageAvailible from "./icons8-image-not-available-96 copy.png";
 
 const PodcastContainer = styled.div`
   display: flex;
-
-  height: auto;
+  width: 200px;
+  height: 300px;
   justify-content: center;
+  a {
+    background-color: #383838;
+  }
   a:hover {
-    background-color: rgba(64, 64, 64, 0.45);
+    background-color: #585858;
     -webkit-box-shadow: 3px 5px 24px grey; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow: 3px 5px 24px grey; /* Firefox 3.5 - 3.6 */
     box-shadow: 3px 5px 24px grey;
@@ -23,6 +26,7 @@ const PodcastStylesLinkContainer = styled(Link)`
 `;
 const TitleContainer = styled.div`
   margin-bottom: 30px;
+  width: 150px;
   font: white;
   font-weight: 600;
   text-align: center;
@@ -38,8 +42,9 @@ const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
+  margin: 0px 15px 0px 15px;
   border-radius: 25px;
   box-shadow: 2px 2px 30px black;
 `;
@@ -48,8 +53,8 @@ ImageContainer.defaultProps = {
 };
 
 const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 25px;
 `;
 const CardTop = styled.div`

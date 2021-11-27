@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const TopBarStylesContainer = styled.div`
-  background-color: pink;
+  background-color: #282828;
   display: flex;
   justify-content: center;
   justify-content: space-between;
